@@ -5,7 +5,7 @@ import math
                                                         Arguments:
                                     pos: (x, y, z) values ranging from -1 to 1
                                     color: (0-255, 0-255, 0-255) Accepts a color values in the form of an RGB triplet
-                                    size: (Length, Width, Height) Default values are (1, 1, 1) """
+                                    OPTIONAL - size: (Length, Width, Height) Default values are (1, 1, 1) """
 
 
 class Cubelet(object):
@@ -13,7 +13,7 @@ class Cubelet(object):
     def __init__(self, pos, color, size=None):
 
         self.pos = {"x": pos[0], "y": pos[1], "z": pos[2]}
-        self.color = {"red" : color[0], "green" : color[1], "blue" : color[2]}
+        self.color = {"red": color[0], "green": color[1], "blue": color[2]}
         self.size = size
         self.theta = 0
         if self.size is None:
@@ -21,19 +21,14 @@ class Cubelet(object):
         else:
             self.size = {"length": size[0], "width": size[1], "height": size[2]}
 
-        self.vertex = vector(self.pos["x"], self.pos["y"], self.size["height"])
-        for i in range(6):
-            cubelet = pyramid(pos=vector(self.pos["x"], self.pos["y"], self.pos["z"]),
-                              color=vector(self.color["red"] , self.color["green"], self.color["blue"]),
-                              size=vector(self.size["length"], self.size["width"], self.size["height"]))
-            cubelet.rotate(angle=math.radians(self.theta), axis=self.vertex)
+        self.vertex = vector(self.size["height"], self.pos["y"], self.pos["x"])
 
-            if self.theta < 360 and i > 0:
-                self.theta += 45
+        cubelet = pyramid(pos=vector(self.pos["x"], self.pos["y"], self.pos["z"]),
+                          color=vector(self.color["red"], self.color["green"], self.color["blue"]),
+                          size=vector(self.size["length"], self.size["width"], self.size["height"]))
 
 
 Cubelet((0, 0, 0), (255, 255, 255))
-
 
 
 
